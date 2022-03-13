@@ -42,10 +42,6 @@ function App() {
 
   const searchForWord = (searchString: string) => {
     fetchWords(searchString);
-    // const foundWords = words.filter(w => `${w.word} ${w.translation} ${w.example_sentence}`.toLowerCase().includes(searchString.toLowerCase()))
-
-    // if (foundWords.length === 0) console.log("Not found");
-    // else console.log(foundWords);
   }
 
   const searchWord = debounce((searchString: string) => {
