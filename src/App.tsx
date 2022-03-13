@@ -25,21 +25,6 @@ function App() {
     };
   };
 
-  const words: ShetlandWord[] = [
-    {
-      word: "a",
-      translation: "have",
-      example_sentence: "He could a come hed he wantit",
-      type: "v",
-    },
-    {
-      word: "boolik",
-      translation: "a pimple",
-      example_sentence: '',
-      type: "n",
-    }
-  ];
-
   const searchForWord = (searchString: string) => {
     fetchWords(searchString);
   }
@@ -64,9 +49,9 @@ function App() {
         </div>
 
         {foundWords && foundWords.map((foundWord: ShetlandWord) => (
-          <span key={foundWord.word}>
+          <div key={foundWord.word}>
             { foundWord.word }
-          </span>
+          </div>
         ))}
       </div>
 
