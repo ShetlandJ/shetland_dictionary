@@ -25,7 +25,6 @@ app.get("/find", async function (req, res) {
   getDb()
     .collection("words")
     .find(searchOr)
-    // .find({ word: { $regex: `^${req.query.searchString}` } })
     .project(projection)
     .limit(50)
     .toArray(function (err, result) {
