@@ -14,15 +14,24 @@ app.get("/find", async function (req, res) {
 
   console.log("SEARCH STRING", req.query.searchString);
 
-    getDb()
+  const searchOr = {
+    $or: [
+      { word: { $regex: `^${req.query.searchString}` } },
+      { example_sentence: { $regex: `^${req.query.searchString}` } },
+      { translation: { $regex: `^${req.query.searchString}` } },
+    ],
+  }
+
+  getDb()
     .collection("words")
-    .find({ word: {$regex: `^${req.query.searchString}`}})
+    .find(searchOr)
+    // .find({ word: { $regex: `^${req.query.searchString}` } })
     .project(projection)
     .limit(50)
     .toArray(function (err, result) {
       if (err) {
         res.status(400).send("Error fetching listings!", err);
-     } else {
+      } else {
         console.log(result);
         res.json(result);
       }
@@ -31,9 +40,9 @@ app.get("/find", async function (req, res) {
 
 
 const PORT = 8081;
-app.listen(PORT, async function(err){
+app.listen(PORT, async function (err) {
 
   if (err) console.log("Error in server setup")
-    await connectToServer(() => console.log("Successfully connected"));
-    console.log("Server listening on Port", PORT);
+  await connectToServer(() => console.log("Successfully connected"));
+  console.log("Server listening on Port", PORT);
 })
