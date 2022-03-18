@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
+import WordResult from './components/WordResult';
+import { ShetlandWord } from './types';
 
-type ShetlandWord = {
-  word: string;
-  translation: string;
-  example_sentence: string
-  type: string
-};
 
 function App() {
   const [wordList, setWordList] = useState([]);
@@ -35,11 +31,11 @@ function App() {
   }, 500);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-red-300 bg-gradient-to-br from-gray-100 to-blue-500">
+    <div className="flex flex-col items-center text-red-300 bg-gradient-to-br from-gray-100 to-blue-500">
       <div className="relative">
         <input
           type="text"
-          className="h-14 w-96 pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none"
+          className="mt-8 h-14 w-96 pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none"
           placeholder="Search a Shetland or English word..."
           onChange={event => searchWord(event.target.value)}
         />
@@ -49,10 +45,12 @@ function App() {
         </div>
 
         {foundWords && foundWords.map((foundWord: ShetlandWord) => (
-          <div key={foundWord.word}>
-            { foundWord.word }
-          </div>
+          <WordResult
+            key={foundWord.word}
+            word={foundWord}
+          />
         ))}
+
       </div>
 
     </div>
