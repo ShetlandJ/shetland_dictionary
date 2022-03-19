@@ -10,13 +10,18 @@ app.get("/find", async function (req, res) {
     word: 1,
     example_sentence: 1,
     translation: 1,
+    type: 1,
+    see_also: 1,
   };
+
+  const regex = { $regex: `^${req.query.searchString}` };
 
   const searchOr = {
     $or: [
-      { word: { $regex: `^${req.query.searchString}` } },
-      { example_sentence: { $regex: `^${req.query.searchString}` } },
-      { translation: { $regex: `^${req.query.searchString}` } },
+      { word: regex },
+      { example_sentence: regex },
+      { translation: regex },
+      { see_also: regex },
     ],
   }
 
@@ -24,13 +29,17 @@ app.get("/find", async function (req, res) {
     .collection("words")
     .find(searchOr)
     .project(projection)
-    .limit(50)
     .toArray(function (err, result) {
       if (err) {
         res.status(400).send("Error fetching listings!", err);
       } else {
-        console.log(result);
-        res.json(result);
+        const payload = result
+        .map(word => ({
+          ...word,
+          see_also: word.see_also.split(',')
+        }))
+
+        res.json(payload);
       }
     });
 });

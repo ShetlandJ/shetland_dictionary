@@ -30,26 +30,28 @@ function App() {
     searchForWord(searchString)
   }, 500);
 
+  let mainBodyClasses = '';
+  if (foundWords.length === 0) mainBodyClasses = `flex flex-col items-center text-red-300 bg-gradient-to-br from-gray-100 to-blue-500 h-screen`;
+  else mainBodyClasses = `flex flex-col items-center text-red-300 bg-gradient-to-br from-gray-100 to-blue-500`;
+
   return (
-    <div className="flex flex-col items-center text-red-300 bg-gradient-to-br from-gray-100 to-blue-500">
+    <div className={mainBodyClasses}>
       <div className="relative">
         <input
           type="text"
-          className="mt-8 h-14 w-96 pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none"
+          className="mt-8 h-14 w-full pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none"
           placeholder="Search a Shetland or English word..."
           onChange={event => searchWord(event.target.value)}
         />
 
-        <div className="absolute top-4 right-3">
-          <i className="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i>
+        <div className="found-words-list">
+          {foundWords && foundWords.map((foundWord: ShetlandWord) => (
+            <WordResult
+              key={foundWord.word}
+              word={foundWord}
+            />
+          ))}
         </div>
-
-        {foundWords && foundWords.map((foundWord: ShetlandWord) => (
-          <WordResult
-            key={foundWord.word}
-            word={foundWord}
-          />
-        ))}
 
       </div>
 
