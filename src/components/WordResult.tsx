@@ -29,6 +29,8 @@ function WordResult(props: { word: ShetlandWord, likeWord: Function, removeLike:
         return markWordAsLiked(wordUuid);
     }
 
+    const showSeeAlso = props.word.see_also && props.word.see_also.length > 0;
+
     return (
         <div className="bg-white shadow-lg rounded-lg mx-4 md:mx-auto my-8 max-w-md md:max-w-2xl">
             <div className="flex items-start px-4 py-6">
@@ -38,7 +40,7 @@ function WordResult(props: { word: ShetlandWord, likeWord: Function, removeLike:
                     </div>
                     <p className="text-gray-700 mb-2">{props.word.translation} </p>
                     {props.word.example_sentence && (
-                        <p className="mt-3 text-gray-700 text-sm">
+                        <p className="mt-3 text-gray-700 mb-2">
                             {
                                 props.word.example_sentence ?
                                     `Usage: ${props.word.example_sentence}` :
@@ -46,17 +48,18 @@ function WordResult(props: { word: ShetlandWord, likeWord: Function, removeLike:
                             }
                         </p>
                     )}
-
-                    <div className="flex align-items-end">
-                        <span className="text-gray-900 mr-2">
-                            See also:
-                        </span>
-                        {props.word.see_also && props.word.see_also.map((seeAlso: string) => (
-                            <span className="cursor-pointer underline hover:text-blue-800 visited:text-purple-600 mr-2" key={seeAlso}>
-                                {seeAlso}
+                    {showSeeAlso && (
+                        <div className="flex align-items-end">
+                            <span className="text-gray-900 mr-2">
+                                See also:
                             </span>
-                        ))}
-                    </div>
+                            {props.word.see_also.map((seeAlso: string) => (
+                                <span className="cursor-pointer underline hover:text-blue-800 visited:text-purple-600 mr-2" key={seeAlso}>
+                                    {seeAlso}
+                                </span>
+                            ))}
+                        </div>
+                    )}
 
                     <div className="mt-4 flex items-center">
                         <div className="flex mr-2 text-gray-700 text-sm mr-3 cursor-pointer">
