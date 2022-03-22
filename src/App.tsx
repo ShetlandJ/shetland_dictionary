@@ -2,12 +2,14 @@ import React, { useState, useCallback } from "react";
 import WordResult from './components/WordResult';
 import { ShetlandWord } from './types';
 import axios from 'axios';
+import Api from './api/api';
+const api = new Api();
 
 function App() {
   const [foundWords, setFoundWords] = useState<any>([]);
 
   const fetchWords = useCallback((input: string) => {
-    axios.get(`http://localhost:8081/find?searchString=${input.toLowerCase()}`)
+    api.searchWords(input)
       .then(({ data }) => setFoundWords(data));
   }, [])
 
@@ -27,10 +29,10 @@ function App() {
 
   const paramWord = window.location.search.split("=")[1];
 
-  if (paramWord) searchWord(paramWord);
+  if (paramWord && foundWords.length === 0) searchWord(paramWord);
 
   const likeWord = (wordUuid: string) => {
-    axios.post(`http://localhost:8081/${wordUuid}/like`)
+    api.like(wordUuid)
       .then(function ({ data }) {
         const foundWordsWithoutUpdatedWord = foundWords.filter((word: ShetlandWord) => word.uuid !== wordUuid);
 
@@ -43,7 +45,7 @@ function App() {
   }
 
   const unlikeWord = (wordUuid: string) => {
-    axios.post(`http://localhost:8081/${wordUuid}/unlike`)
+    api.unlike(wordUuid)
       .then(function ({ data }) {
         const foundWordsWithoutUpdatedWord = foundWords.filter((word: ShetlandWord) => word.uuid !== wordUuid);
 
@@ -79,6 +81,7 @@ function App() {
             word={foundWord}
             likeWord={(word: string) => likeWord(word)}
             removeLike={(word: string) => unlikeWord(word)}
+            goToSeeAlso={(word: string) => window.location.href = `/search?word=${word}`}
           />
         ))}
       </div>

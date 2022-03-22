@@ -3,10 +3,13 @@ import { ShetlandWord } from '../types';
 import { getLiked, setLiked, remove } from "../helpers/localStorage";
 
 
-function WordResult(props: { word: ShetlandWord, likeWord: Function, removeLike: Function }) {
+function WordResult(props: {
+    word: ShetlandWord,
+    likeWord: Function,
+    removeLike: Function,
+    goToSeeAlso: Function
+}) {
     const [isLiked, setIsLiked] = useState(false);
-
-    // setIsLiked(!!getLiked(props.word.uuid));
 
     useEffect(() => {
         setIsLiked(!!getLiked(props.word.uuid));
@@ -54,7 +57,11 @@ function WordResult(props: { word: ShetlandWord, likeWord: Function, removeLike:
                                 See also:
                             </span>
                             {props.word.see_also.map((seeAlso: string) => (
-                                <span className="cursor-pointer underline hover:text-blue-800 visited:text-purple-600 mr-2" key={seeAlso}>
+                                <span
+                                    className="cursor-pointer underline hover:text-blue-800 visited:text-purple-600 mr-2"
+                                    key={seeAlso}
+                                    onClick={() => props.goToSeeAlso(seeAlso)}
+                                >
                                     {seeAlso}
                                 </span>
                             ))}

@@ -3,6 +3,10 @@ import ReactDOM from "react-dom";
 import "./styles/tailwind.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://localhost:8081';
+
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
