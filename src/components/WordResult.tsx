@@ -30,13 +30,13 @@ function WordResult(props: { word: ShetlandWord, likeWord: Function, removeLike:
     }
 
     return (
-        <div className="flex bg-white shadow-lg rounded-lg mx-4 md:mx-auto my-8 max-w-md md:max-w-2xl">
+        <div className="bg-white shadow-lg rounded-lg mx-4 md:mx-auto my-8 max-w-md md:max-w-2xl">
             <div className="flex items-start px-4 py-6">
                 <div>
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between mb-2">
                         <h2 className="text-lg font-semibold text-gray-900 -mt-1">{props.word.word}</h2>
                     </div>
-                    <p className="text-gray-700">{props.word.translation} </p>
+                    <p className="text-gray-700 mb-2">{props.word.translation} </p>
                     {props.word.example_sentence && (
                         <p className="mt-3 text-gray-700 text-sm">
                             {
@@ -47,7 +47,7 @@ function WordResult(props: { word: ShetlandWord, likeWord: Function, removeLike:
                         </p>
                     )}
 
-                    <div>
+                    <div className="flex align-items-end">
                         <span className="text-gray-900 mr-2">
                             See also:
                         </span>
