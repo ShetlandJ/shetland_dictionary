@@ -1,6 +1,5 @@
-import { ObjectId } from 'mongodb';
 import { ShetlandWord } from '../../src/types';
-const { getDb, connectToServer } = require('../db.ts');
+const { getDb } = require('../db.ts');
 
 export default class Word {
     async search(searchString: string): Promise<ShetlandWord[]> {
@@ -11,6 +10,7 @@ export default class Word {
             translation: 1,
             type: 1,
             see_also: 1,
+            uuid: 1,
         };
 
         const regex = { $regex: `^${searchString}` };
