@@ -1,11 +1,14 @@
 import express, { Request, Response } from 'express';
+
+import Word from './models/word';
 const app = express();
-const { connectToServer, getDb } = require('./db.ts');
+const { connectToServer , getDb } = require('./db.ts');
 const cors = require("cors");
 app.use(cors());
 
 app.get("/find", async function (req: Request, res: Response) {
-  const projection = {
+  try {
+    const projection = {
     _id: 0,
     word: 1,
     example_sentence: 1,
@@ -42,7 +45,21 @@ app.get("/find", async function (req: Request, res: Response) {
         res.json(payload);
       }
     });
+  } catch (errors) {
+    res.status(500).send(errors);
+  }
 });
+
+
+// const word = new Word();
+// const { searchString } = req.query;
+// const response = await word.search(String(searchString))
+
+// if (!response) res.status(200).json([]);
+
+// res.json(response);
+// });
+
 
 
 const PORT = 8081;

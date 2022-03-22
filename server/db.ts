@@ -1,15 +1,12 @@
-const { MongoClient } = require("mongodb");
+import { MongoClient } from "mongodb";
 const connectionString = 'mongodb://localhost:27017';
-const client = new MongoClient(connectionString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const client = new MongoClient(connectionString, {});
 
-let dbConnection;
+let dbConnection: any;
 
 module.exports = {
-  connectToServer: function (callback) {
-    client.connect(function (err, db) {
+  connectToServer: function (callback: Function) {
+    client.connect(function (err: any, db: any) {
       if (err || !db) {
         return callback(err);
       }
@@ -21,7 +18,7 @@ module.exports = {
     });
   },
 
-  getDb: function () {
+  getDb: function (): any {
     return dbConnection;
   },
 };
